@@ -9,6 +9,7 @@
 #include <sys/resource.h>
 #endif
 
+constexpr size_t GB = 1024 * 1024 * 1024;
 #ifdef _WIN32
 constexpr size_t total_bytes = 4L * GB;
 #else
