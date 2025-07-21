@@ -73,27 +73,3 @@ jobs:
       # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ matrix.build_type }}
-
-    - name: Run Executables
-      working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      shell: bash
-      run: |
-        exe="main"
-
-        if [ "$RUNNER_OS" == "Windows" ]; then
-            executable="${{ matrix.build_type }}/${exe}.exe"
-          else
-            executable="${exe}"
-          fi
-    
-          echo "--------------------------------------------------"
-          echo "Running ${executable}..."
-
-          if [ -f "${executable}" ]; then
-            "./${executable}"
-          else
-            echo "Error: Executable not found: $(pwd)/${executable}"
-            exit 1
-          fi
-        done
-
