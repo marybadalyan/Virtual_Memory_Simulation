@@ -9,6 +9,13 @@
 #include <sys/resource.h>
 #endif
 
+#ifdef _WIN32
+constexpr size_t total_bytes = 4L * GB;
+#else
+constexpr size_t total_bytes = 2L * GB;
+#endif
+
+
 void print_page_faults() {
 #ifdef _WIN32
     PROCESS_MEMORY_COUNTERS counters;
@@ -24,9 +31,9 @@ void print_page_faults() {
 }
 
 int main(){
-    
-    size_t size = 32L * 1024 * 1024 * 1024 / sizeof(int);
-    int* array = (int*)malloc(32L * 1024 * 1024 * 1024);
+
+    size_t size = total_bytes / sizeof(int);
+    int* array = (int*)malloc(total_bytes);
 
     if (array == nullptr) {
         std::cerr << "Memory allocation failed" << std::endl;
